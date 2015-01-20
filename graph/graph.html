@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<title>Force Directed Graph</title>
+	<link href="css/default.css" rel="stylesheet" media="screen" type="text/css">
+</head>
+<body>
+	<svg id="visualization">
+
+	</svg>
+	<!-- JS -->
+	<script src="js/jquery-2.1.2.min.js"></script>
+	<script src="js/d3.min.js" charset="utf-8"></script>
+	<script>
+
+		
+
+
+		/* Force Directed Graph */
+    	var svg = d3.select("#visualization");
+    	svg
+    		.attr("width", window.innerWidth)
+    		.attr("height", window.innerHeight);
+
+		var force = d3.layout.force()
+    		.charge(-80)
+    		// .chargeDistance(300)
+    		.linkDistance(300)
+    		.friction(0.7)
+    		.size([svg.attr("width"), svg.attr("height")]);
+
+    	d3.json("data/graph.json", function(error, graph) {
+    		var nodes = graph.nodes;
+    		// var links = graph.links;
+    		/* create logharitmic scale for text */
+			min = 999;
+			max = 0;
+			for (var i=0; i<nodes.length;i++) {
+				var length = nodes[i]["publications"].length
+				min = (length < min) ? length : min;
+				max = (length > max) ? length : max;
+			}
+			circleSizeScale = d3.scale.log()
+				.domain([min, max])
+				.range([1, 60]);
+
+
+    		force
+    			.nodes(nodes)
+    			.links(graph.links)
+    			.start();
+
+    		var link = svg.selectAll(".link")
+		    	.data(graph.links)
+		    	.enter().append("line")
+		    	.attr("class", "link")
+		    	.style("stroke-width", function(d) { return d.count; })
+		    	.style({
+		    		"stroke": "#666",
+			    	"opacity": 0.6,
+			    	"stroke-linecap": "round"
+		    	});
+
+
+    		var node = svg.selectAll(".node")
+			    .data(nodes)
+			    .enter()
+			    .append("g")
+			    .call(force.drag);
+
+			node.append("circle")
+			    .attr("class", "node")
+			    .attr("r", function(d) { return circleSizeScale(d["publications"].length)})
+			    .style({
+			    	"fill": "#000088",
+			    	"opacity": 0.6
+			    })
+
+			node.append("text")
+			    .attr("dx", 12)
+			    .attr("dy", ".35em")
+			    .text(function(d) { return d.name });
+
+			force.on("tick", function() {
+				link.attr("x1", function(d) { return d.source.x; })
+			        .attr("y1", function(d) { return d.source.y; })
+			        .attr("x2", function(d) { return d.target.x; })
+			        .attr("y2", function(d) { return d.target.y; });
+
+			    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+			});
+
+
+
+			node.on('click', function(d) {
+				window.open("http://infovis-authors.azurewebsites.net/authordetail.html?id="+d.id,"_self")
+			})
+		});
+
+	</script>
+</body>
