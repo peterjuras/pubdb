@@ -1,0 +1,39 @@
+﻿.myContent {
+    width: 75%;
+    margin: auto !important;
+}
+
+h1,h2,.myCard {
+    margin-left: 10px;
+}
+
+.myCard {
+    width: 100% !important;
+}
+
+.myYellowGreen {
+    background: yellowgreen!important;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
