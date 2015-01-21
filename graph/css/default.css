@@ -8,6 +8,19 @@ body, html, #visualization {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+circle {
+	fill: #000088;
+	opacity: 0.6;
+	z-index: 2;
+}
+
+line {
+	stroke: #666;
+	opacity: 0.6;
+	stroke-linecap: round;
+	z-index: 1;
+}
+
 svg text {
 	fill: transparent;
 	font-size: 10px;
@@ -15,4 +28,22 @@ svg text {
 
 svg g:hover text {
 	fill: #888;
+}
+
+section#filter {
+	background-color: rgba(0,0,0,.8);
+	box-shadow: 3px 0px 3px #888;
+	color: #fff;
+	height: 100%;
+	padding: 0 15px;
+	position: absolute;
+	width: 250px;
+}
+
+.min {
+	float: left;
+}
+
+.max {
+	float: right;
 }
