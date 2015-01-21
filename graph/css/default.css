@@ -23,11 +23,11 @@ line {
 
 svg text {
 	fill: transparent;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 svg g:hover text {
-	fill: #888;
+	fill: #333;
 }
 
 section#filter {

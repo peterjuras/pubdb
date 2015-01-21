@@ -76,7 +76,7 @@ d3.json("data/graph.json", function(error, graph) {
 			minPublications = (length < minPublications) ? length : minPublications;
 			maxPublications = (length > maxPublications) ? length : maxPublications;
 		}
-		circleSizeScale = d3.scale.log()
+		circleSizeScale = d3.scale.sqrt()
 			.domain([minPublications, maxPublications])
 			.range([1, 60]);
 
@@ -112,7 +112,6 @@ d3.json("data/graph.json", function(error, graph) {
 
 		/* Filter UI (jQuery UI)
     	--------------------------------------------------------------------------------*/
-    	
 
 		$(function() {
 		    $("#publications-range").slider({
@@ -179,26 +178,33 @@ function updateGraph() {
 
 	node = node.data(nodes_current, function(d) { return String(d.id); });
 
-	node
-		.attr("r", function(d) { 
+	node.select("circle").attr("r", function(d) { 
 	    	var numberOfPublications = 0;
     		d.publicationsByYear.forEach(function(element) {
     			numberOfPublications += element.pubs.length;
     		})
-    		return circleSizeScale(numberOfPublications);
+    		return circleSizeScale(d.numberOfPublications);
 	    })
 	
 	node.exit().remove();
 
-	node.enter()
-		.append("circle")
+	var g = node.enter()
+		.append("g")
+		.call(force.drag);
+
+	g.append("circle")
 		.attr("r", function(d) { 
     		var numberOfPublications = 0;
     		d.publicationsByYear.forEach(function(element) {
     			numberOfPublications += element.pubs.length;
-    		})
-    		return circleSizeScale(numberOfPublications);
+    		});
+    		return circleSizeScale(d.numberOfPublications);
 	    })
+
+	g.append("text")
+		.attr("dx", 12)
+		.attr("dy", ".35em")
+		.text(function(d) { return d.name });
 
 	force.start();
 }
@@ -229,12 +235,13 @@ var filterAuthors = {
 
 			/* publicationsByYear is ordered by year DESC */
 			while ((i < author.publicationsByYear.length) && (parseInt(author.publicationsByYear[i].year) >= year_min)) {
-				if (parseInt(author.publicationsByYear[i].year) <= year_max)
+				if (parseInt(author.publicationsByYear[i].year) <= year_max) {
 					numberOfPublications += author.publicationsByYear[i].pubs.length;
+				}
 				i++;
 			}
+			author.numberOfPublications = numberOfPublications;
 			if ((numberOfPublications >= amount_min) && (numberOfPublications <= amount_max)) {
-				author.numberOfPublications = numberOfPublications;
 				newAuthors.push(author);
 			}
 		})
