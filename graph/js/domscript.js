@@ -105,6 +105,7 @@ d3.json("data/graph.json", function(error, graph) {
 
 
 		node.on('click', function(d) {
+			if (d3.event.defaultPrevented) return; // prevent opening link after drag-release
 			window.open("../authordetail/authordetail.html?id="+d.id,"_self")
 		})
 
