@@ -5,7 +5,12 @@ body, html, #visualization {
 	margin: 0;
 	padding: 0;
 
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+body {
+	background-color: #fdfdfd;
+	overflow: hidden;
 }
 
 circle {
@@ -32,7 +37,7 @@ svg g:hover text {
 
 section#filter {
 	background-color: rgba(0,0,0,.8);
-	box-shadow: 3px 0px 3px #888;
+	box-shadow: 3px 0px 3px rgba(0,0,0,.5);
 	color: #fff;
 	height: 100%;
 	padding: 0 15px;
@@ -40,10 +45,27 @@ section#filter {
 	width: 250px;
 }
 
+.ui-slider {
+	margin: 0 10px 5px;
+}
+
 .min {
 	float: left;
+	padding-left: 10px;
 }
 
 .max {
 	float: right;
+	padding-right: 10px;
+}
+
+h1 {
+	border-bottom: 1px solid #fff;
+	padding-bottom: 3px;
+}
+
+h3 {
+	clear: both;
+	margin-bottom: 8px;
+	padding-top: 10px;
 }

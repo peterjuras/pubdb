@@ -104,7 +104,7 @@ d3.json("data/graph.json", function(error, graph) {
 
 
 		node.on('click', function(d) {
-			window.open("http://infovis-authors.azurewebsites.net/authordetail.html?id="+d.id,"_self")
+			window.open("../authordetail/authordetail.html?id="+d.id,"_self")
 		})
 
 
@@ -190,7 +190,7 @@ function updateGraph() {
 
 	var g = node.enter()
 		.append("g")
-		.call(force.drag);
+		// .call(force.drag);
 
 	g.append("circle")
 		.attr("r", function(d) { 
