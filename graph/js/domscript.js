@@ -87,8 +87,9 @@ d3.json("data/graph.json", function (error, graph) {
         force
             .nodes(nodes_current)
             .links(links_current)
-            .charge(0)
-            .chargeDistance(0)
+            .friction(0.9)
+            //.charge(0)
+            //.chargeDistance(0)
             .start();
 
         updateGraph();
