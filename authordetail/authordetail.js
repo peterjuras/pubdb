@@ -167,7 +167,12 @@ function getParameterByName(name) {
 }
 
 function plotBarChart() {
-    var publicationGroups = authorPubGroups;
+    //var publicationGroups = authorPubGroups;
+    var publicationGroups = [];
+
+    authorPubGroups.forEach(function(group) {
+        publicationGroups.unshift(group);
+    });
 
     var margin = { top: 20, right: 20, bottom: 30, left: 40 },
         width = $('#barChartArea').width() - margin.left - margin.right,
