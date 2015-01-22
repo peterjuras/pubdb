@@ -94,11 +94,14 @@ d3.json("data/graph.json", function (error, graph) {
         updateGraph();
 
         force.on("tick", function () {
-            var q = d3.geom.quadtree(nodes_current),
+            if (nodes_current.length < 50) {
+                var q = d3.geom.quadtree(nodes_current),
                     i = 0,
                     n = nodes_current.length;
 
-            while (++i < n) q.visit(collide(nodes_current[i]));
+                while (++i < n) q.visit(collide(nodes_current[i]));
+
+            }
 
             link.attr("x1", function (d) { return d.source.x; })
                 .attr("y1", function (d) { return d.source.y; })
@@ -111,10 +114,11 @@ d3.json("data/graph.json", function (error, graph) {
             //.attr("cy", function (d) { return d.y; });
 
             node
-                .attr("transform", function(d) {
+                .attr("transform", function (d) {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
-                .style("visibility", function(d) {return d.name.indexOf("HASH") != -1 ? "hidden" : "visible";
+                .style("visibility", function (d) {
+                    return d.name.indexOf("HASH") != -1 ? "hidden" : "visible";
                 });
 
             //node.attr("transform", function (d) { return "translate(0px,0px)"; });
@@ -238,7 +242,7 @@ function updateGraph() {
 	        })
 	        return circleSizeScale(d.numberOfPublications);
 	    })
-	    .style("fill", function(d) { return color(d.name)});
+	    .style("fill", function (d) { return color(d.name) });
 
     node.exit().remove();
 
@@ -254,7 +258,7 @@ function updateGraph() {
 		    });
 		    return circleSizeScale(d.numberOfPublications);
 		})
-		.style("fill", function(d) { return color(d.name)});
+		.style("fill", function (d) { return color(d.name) });
 
     g.append("text")
 		.attr("dx", 12)
