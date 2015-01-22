@@ -92,12 +92,26 @@ d3.json("data/graph.json", function(error, graph) {
 		updateGraph();
 
 		force.on("tick", function() {
-			link.attr("x1", function(d) { return d.source.x; })
+		    var q = d3.geom.quadtree(nodes_current),
+                    i = 0,
+                    n = nodes_current.length;
+
+		    while (++i < n) q.visit(collide(nodes_current[i]));
+
+		    link.attr("x1", function (d) { return d.source.x; })
 		        .attr("y1", function(d) { return d.source.y; })
 		        .attr("x2", function(d) { return d.target.x; })
 		        .attr("y2", function(d) { return d.target.y; });
 
-		    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+		    //svg.selectAll('circle')
+                //.attr("cx", function (d) { return d.x; })
+                //.attr("cy", function (d) { return d.y; });
+
+		    node.attr("transform", function(d) {
+		         return "translate(" + d.x + "," + d.y + ")";
+		    });
+		    //node.attr("transform", function (d) { return "translate(0px,0px)"; });
 		});
 
 		force.start();
@@ -155,6 +169,32 @@ d3.json("data/graph.json", function(error, graph) {
 
 	
 });
+
+function collide(node) {
+    var r = circleSizeScale(node["publications"].length),// node.radius + 16,
+    //var r = node.childNodes[0].r.baseVal.value + 250,// node.radius + 16,
+        nx1 = node.x - r,
+        nx2 = node.x + r,
+        ny1 = node.y - r,
+        ny2 = node.y + r;
+    return function (quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== node)) {
+            var x = node.x - quad.point.x,
+                y = node.y - quad.point.y,
+                l = Math.sqrt(x * x + y * y),
+                r = circleSizeScale(node["publications"].length) + circleSizeScale(quad.point["publications"].length); //node.radius + quad.point.radius;
+                
+            if (l < r) {
+                l = (l - r) / l * .5;
+                node.x -= x *= l;
+                node.y -= y *= l;
+                quad.point.x += x;
+                quad.point.y += y;
+            }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    };
+}
 
 /* Filtering
 --------------------------------------------------------------------------------*/
