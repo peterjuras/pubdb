@@ -5,7 +5,7 @@ minPublications = 99999;
 maxPublications = 0;
 
 minYears = 2100;
-maxYears = 1900;
+maxYears = 2015;
 
 nodes_current = [];
 links_current = [];
@@ -237,10 +237,6 @@ function updateGraph() {
 
     node.select("circle")
 	    .attr("r", function (d) {
-	        var numberOfPublications = 0;
-	        d.publicationsByYear.forEach(function (element) {
-	            numberOfPublications += element.pubs.length;
-	        })
 	        return circleSizeScale(d.numberOfPublications);
 	    })
 	    .style("fill", function (d) { return color(d.name) });
@@ -253,10 +249,6 @@ function updateGraph() {
 
     g.append("circle")
 		.attr("r", function (d) {
-		    var numberOfPublications = 0;
-		    d.publicationsByYear.forEach(function (element) {
-		        numberOfPublications += element.pubs.length;
-		    });
 		    return circleSizeScale(d.numberOfPublications);
 		})
 		.style("fill", function (d) { return color(d.name) });
@@ -294,7 +286,7 @@ var filterAuthors = {
             var numberOfPublications = 0;
 
             /* publicationsByYear is ordered by year DESC */
-            while ((i < author.publicationsByYear.length) && (parseInt(author.publicationsByYear[i].year) >= year_min)) {
+            while ((i < author.publicationsByYear.length) && ((parseInt(author.publicationsByYear[i].year) >= year_min) || typeof author.publicationsByYear[i].year === 'undefined')) {
                 if (parseInt(author.publicationsByYear[i].year) <= year_max) {
                     numberOfPublications += author.publicationsByYear[i].pubs.length;
                 }
