@@ -6,7 +6,7 @@ var app = express()
 
 /* Includes
 -----------------------------------------------------------*/
-var authors = require('././authors_with_ids'); /* #TODO Pfad */
+var authors = require('./authors_with_ids.json'); /* #TODO Pfad */
 
 app.get('/authors', function(req, res) {
 	for (var i = 0; i < authors.length; i++) {
