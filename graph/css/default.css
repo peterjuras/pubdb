@@ -46,7 +46,7 @@ svg g:hover circle {
 }
 
 svg g circle:hover + text {
-	fill: #333;
+	fill: #000;
 }
 
 section#filter {
