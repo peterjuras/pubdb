@@ -238,7 +238,7 @@ function updateGraph() {
 	        })
 	        return circleSizeScale(d.numberOfPublications);
 	    })
-	    .style("fill", function(d) { return color(Math.floor(Math.random() * (20 - 1 + 1)) + 1); });
+	    .style("fill", function(d) { return color(d.name)});
 
     node.exit().remove();
 
@@ -254,7 +254,7 @@ function updateGraph() {
 		    });
 		    return circleSizeScale(d.numberOfPublications);
 		})
-		.style("fill", function(d) { return color(Math.floor(Math.random() * (20 - 1 + 1)) + 1); });
+		.style("fill", function(d) { return color(d.name)});
 
     g.append("text")
 		.attr("dx", 12)
