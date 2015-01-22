@@ -17,6 +17,7 @@ svg
 	.attr("height", window.innerHeight);
 var node = svg.selectAll(".node");
 var link = svg.selectAll(".link");
+var color = d3.scale.category20();
 
 force = d3.layout.force()
 	.charge(function (d, i) { return -d.numberOfPublications * 15 })
@@ -229,13 +230,15 @@ function updateGraph() {
 
     node = node.data(nodes_current, function (d) { return String(d.id); });
 
-    node.select("circle").attr("r", function (d) {
-        var numberOfPublications = 0;
-        d.publicationsByYear.forEach(function (element) {
-            numberOfPublications += element.pubs.length;
-        })
-        return circleSizeScale(d.numberOfPublications);
-    })
+    node.select("circle")
+	    .attr("r", function (d) {
+	        var numberOfPublications = 0;
+	        d.publicationsByYear.forEach(function (element) {
+	            numberOfPublications += element.pubs.length;
+	        })
+	        return circleSizeScale(d.numberOfPublications);
+	    })
+	    .style("fill", function(d) { return color(Math.floor(Math.random() * (20 - 1 + 1)) + 1); });
 
     node.exit().remove();
 
@@ -251,6 +254,7 @@ function updateGraph() {
 		    });
 		    return circleSizeScale(d.numberOfPublications);
 		})
+		.style("fill", function(d) { return color(Math.floor(Math.random() * (20 - 1 + 1)) + 1); });
 
     g.append("text")
 		.attr("dx", 12)
