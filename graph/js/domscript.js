@@ -87,6 +87,8 @@ d3.json("data/graph.json", function(error, graph) {
 		force
 			.nodes(nodes_current)
 			.links(links_current)
+            .charge(0)
+            .chargeDistance(0)
 			.start();
 
 		updateGraph();
@@ -114,7 +116,7 @@ d3.json("data/graph.json", function(error, graph) {
 		    //node.attr("transform", function (d) { return "translate(0px,0px)"; });
 		});
 
-		force.start();
+		//force.start();
 
 
 
@@ -171,7 +173,7 @@ d3.json("data/graph.json", function(error, graph) {
 });
 
 function collide(node) {
-    var r = circleSizeScale(node["publications"].length),// node.radius + 16,
+    var r = circleSizeScale(node["publications"].length) + 200,// node.radius + 16,
     //var r = node.childNodes[0].r.baseVal.value + 250,// node.radius + 16,
         nx1 = node.x - r,
         nx2 = node.x + r,
