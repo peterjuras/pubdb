@@ -20,18 +20,32 @@ circle {
 }
 
 line {
-	stroke: #666;
+	stroke: #888;
 	opacity: 0.6;
 	stroke-linecap: round;
 	z-index: 1;
 }
 
+#visualization {
+	margin-left: 200px;
+}
+
+svg circle,
+svg text {
+	cursor: pointer;
+}
+
 svg text {
 	fill: transparent;
+	font-weight: bold;
 	font-size: 12px;
 }
 
-svg g:hover text {
+svg g:hover circle {
+	opacity: 0.8;
+}
+
+svg g circle:hover + text {
 	fill: #333;
 }
 

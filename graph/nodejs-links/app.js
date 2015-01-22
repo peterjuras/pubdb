@@ -43,17 +43,17 @@ app.get('/', function (req, res) {
 							(links.length == 0) 
 							|| ( 
 								!( 
-									(links[links.length - 1].a === authorOne.id) && (links[links.length - 1].b === authorTwo.id) 
+									(links[links.length - 1].source === authorOne.id) && (links[links.length - 1].target === authorTwo.id) 
 								) 
 							)
 							) {
-							links.push({"a": authorOne.id, "b": authorTwo.id, "count": 1})
+							links.push({"source": authorOne.id, "target": authorTwo.id, "count": 1})
 						} else {
 							links[links.length - 1].count++;
 						}
 
 						// remove publication from second_author.publications
-						authorTwo.publications.splice(j, 1);
+						// authorTwo.publications.splice(j, 1);
 						if (authorTwo.publications.length == 0)
 							authors.splice(authorsInnerIterator, 1)
 

@@ -19,11 +19,12 @@ var node = svg.selectAll(".node");
 var link = svg.selectAll(".link");
 
 force = d3.layout.force()
-	.charge(-80)
-	// .chargeDistance(300)
-	.linkDistance(300)
+	.charge(function(d, i) { return -d.numberOfPublications*15})
+	// .charge(-30)
+	.chargeDistance(300)
+	.linkDistance(150)
 	.friction(0.7)
-	.size([svg.attr("width"), svg.attr("height")]);
+	.size([0.9*parseInt(svg.attr("width")-200), 0.9*parseInt(svg.attr("height"))]);
 
 /* Load graph data via AJAX */
 d3.json("data/graph.json", function(error, graph) {
@@ -78,7 +79,7 @@ d3.json("data/graph.json", function(error, graph) {
 		}
 		circleSizeScale = d3.scale.sqrt()
 			.domain([minPublications, maxPublications])
-			.range([1, 60]);
+			.range([3, 60]);
 
 		publicationsRange = [minPublications, maxPublications];
 		yearsRange = [minYears, maxYears];
@@ -169,6 +170,10 @@ function updateGraph() {
 	link = link.data(links_current, function(d) { return d.source.id + "-" + d.target.id });
 
 	link.exit().remove();
+	// link.remove();
+	// link.append("line")
+ //    	.attr("class", "link")
+ //    	.style("stroke-width", function(d) { return d.count; })
 
 	link.enter().append("line")
     	.attr("class", "link")
@@ -190,7 +195,7 @@ function updateGraph() {
 
 	var g = node.enter()
 		.append("g")
-		// .call(force.drag);
+		.call(force.drag);
 
 	g.append("circle")
 		.attr("r", function(d) { 
