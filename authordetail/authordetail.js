@@ -19,20 +19,33 @@ $(document).ready(function () {
     var param = getParameterByName('id');
     var id = param ? parseInt(param) : 6;
 
+    $(this).scroll(translateHeaderAndGraph);
+
     displayAuthor(id);
 });
 
 $(window).resize(function () {
     plotBarChart();
-
+    translateHeaderAndGraph();
     switchFloatedChart();
 });
+
+function translateHeaderAndGraph() {
+    var cssStyle;
+    if ($(window).width() > 768) {
+        cssStyle = { "transform": "translateY(" + $(document).scrollTop() + "px)" };
+    } else {
+        cssStyle = { "transform": "translateY(0px)" };
+    }
+    $('#authorName').css(cssStyle);
+    $('#barChartArea').css(cssStyle);
+}
 
 function switchFloatedChart() {
     if ($(window).width() >= 768) {
         $('#barChartArea').addClass('left');
     } else {
-        
+
     }
 }
 
@@ -58,8 +71,8 @@ function displayAuthor(id) {
     //    });
     //});
 
-    publications.forEach(function(publication) {
-        publication.authors.some(function(pubAuthor) {
+    publications.forEach(function (publication) {
+        publication.authors.some(function (pubAuthor) {
             if (pubAuthor.name.indexOf(author.name) != -1) {
                 authorPubs.push(publication);
                 return true;
@@ -170,7 +183,7 @@ function plotBarChart() {
     //var publicationGroups = authorPubGroups;
     var publicationGroups = [];
 
-    authorPubGroups.forEach(function(group) {
+    authorPubGroups.forEach(function (group) {
         publicationGroups.unshift(group);
     });
 
