@@ -15,13 +15,13 @@ body {
 
 circle {
 	fill: #000088;
-	opacity: 0.6;
+	opacity: 0.8;
 	z-index: 2;
 }
 
 line {
-	stroke: #888;
-	opacity: 0.6;
+	stroke: #333;
+	opacity: 0.2;
 	stroke-linecap: round;
 	z-index: 1;
 }
@@ -36,17 +36,18 @@ svg text {
 }
 
 svg text {
-	fill: transparent;
+	fill: #000;
+	display: none;
 	font-weight: bold;
 	font-size: 12px;
 }
 
 svg g:hover circle {
-	opacity: 0.8;
+	opacity: 0.95;
 }
 
 svg g circle:hover + text {
-	fill: #000;
+	display: inline-block;
 }
 
 section#filter {

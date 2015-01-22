@@ -23,7 +23,7 @@ force = d3.layout.force()
 	.charge(function (d, i) { return -d.numberOfPublications * 15 })
 	// .charge(-30)
 	.chargeDistance(300)
-	.linkDistance(150)
+	.linkDistance(250)
 	.friction(0.7)
 	.size([0.9 * parseInt(svg.attr("width") - 200), 0.9 * parseInt(svg.attr("height"))]);
 
