@@ -47,12 +47,22 @@ function displayAuthor(id) {
     });
 
     $('#authorName').text(author.name);
+    document.title = author.name;
 
-    author.publications.forEach(function (element) {
-        publications.some(function (pub) {
-            if (pub.id.indexOf(element) != -1) {
-                authorPubs.push(pub);
-                console.log(pub);
+    //author.publications.forEach(function (element) {
+    //    publications.some(function (pub) {
+    //        if (pub.id.indexOf(element) != -1) {
+    //            authorPubs.push(pub);
+    //            console.log(pub);
+    //        }
+    //    });
+    //});
+
+    publications.forEach(function(publication) {
+        publication.authors.some(function(pubAuthor) {
+            if (pubAuthor.name.indexOf(author.name) != -1) {
+                authorPubs.push(publication);
+                return true;
             }
         });
     });
