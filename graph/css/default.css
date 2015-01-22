@@ -15,7 +15,7 @@ body {
 
 circle {
 	fill: #000088;
-	opacity: 0.7;
+	opacity: 0.6;
 	z-index: 2;
 }
 
@@ -42,7 +42,7 @@ svg text {
 }
 
 svg g:hover circle {
-	opacity: 0.9;
+	opacity: 0.8;
 }
 
 svg g circle:hover + text {
